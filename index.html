@@ -9,10 +9,66 @@
     <h1>Task Manager</h1>
     <input type="text" id="taskInput" placeholder="New Task" />
     <button id="addBtn">Add Task</button>
+    <button id="bulkAddBtn">Add Bulk Tasks (Demo)</button>
     <div id="taskList"></div>
+    <button id="saveBtn">Save Tasks</button>
+    <p id="saveMessage"></p>
     <script src="taskManager.js"></script>
     <script>
-      // DOM logic here
+      document.addEventListener("DOMContentLoaded", () => {
+        const manager = createTaskManager();
+        const taskInput = document.getElementById("taskInput");
+        const addBtn = document.getElementById("addBtn");
+        const taskListDiv = document.getElementById("taskList");
+        const saveBtn = document.getElementById("saveBtn");
+        const saveMessage = document.getElementById("saveMessage");
+
+        function displayTasks() {
+          const tasks = manager.listTasks();
+          taskListDiv.innerHTML = "";
+          if (tasks.length === 0) {
+            taskListDiv.textContent = "No tasks yet.";
+            return;
+          }
+          tasks.forEach((taskObj, index) => {
+            const taskItem = document.createElement("div");
+            taskItem.className = "task-item";
+            taskItem.innerHTML = `
+          <span><strong>${taskObj.task}</strong> (${taskObj.priority})</span>
+          <button class="remove-btn" data-index="${index}">Remove</button>
+        `;
+            taskListDiv.appendChild(taskItem);
+          });
+
+          document.querySelectorAll(".remove-btn").forEach((btn) => {
+            btn.addEventListener("click", (event) => {
+              const index = event.target.getAttribute("data-index");
+              manager.removeTask(parseInt(index));
+              displayTasks();
+            });
+          });
+        }
+
+        addBtn.addEventListener("click", () => {
+          const taskText = taskInput.value.trim();
+          if (taskText === "") {
+            alert("Please enter a task.");
+            return;
+          }
+          manager.addTask(taskText);
+          taskInput.value = "";
+          displayTasks();
+        });
+
+        const bulkAddBtn = document.getElementById("bulkAddBtn");
+        if (bulkAddBtn) {
+          bulkAddBtn.addEventListener("click", () => {
+            manager.addTasks("Buy milk", "Pay bills", "Call mom");
+            displayTasks();
+            saveMessage.textContent = "Added bulk tasks.";
+          });
+        }
+      });
     </script>
   </body>
 </html>
