@@ -61,8 +61,3 @@ When merging the `feature-ui` branch into `main`, a conflict in `index.html` occ
 ### 6. Syntax Errors
 A missing parenthesis in the event listener code caused an “Uncaught SyntaxError”. Using the browser’s console to locate the exact line number made debugging straightforward.
 
-## Getting Started
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/task-manager.git
