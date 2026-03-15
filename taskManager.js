@@ -10,7 +10,7 @@ function createTaskManager() {
       items.forEach((task) => {
         this.addTask(task);
       });
-      console.log(`Added ${items.length} tasks in bulk.`);
+      console.log(`Added ${items.length} tasks in bulk using rest parameters.`);
     },
     listTasks() {
       return tasks.slice();
