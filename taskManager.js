@@ -28,7 +28,7 @@ function createTaskManager() {
     saveTasks(callback) {
       setTimeout(() => {
         callback(tasks.slice());
-        console.log("Save completed.");
+        console.log("Callback executedafter a simulated delay.");
       }, 1000);
     },
   };
